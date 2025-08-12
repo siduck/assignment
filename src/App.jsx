@@ -56,6 +56,8 @@ function App() {
   }, []);
 
   const handleWheel = (event) => {
+    if (scale >= 4 && event.deltaY < 0) return;
+
     setScale((s) => Math.max(1, s + event.deltaY * -0.004));
   };
 
@@ -83,13 +85,13 @@ function App() {
   return (
     <div
       ref={containerRef}
-      className="p-3 grid grid-cols-[1fr_1fr_50px_1fr_1fr] grid-rows-[1fr_50px_1fr] gap-3 h-screen"
+      className="p-3 grid grid-cols-[1fr_1fr_100px_1fr_1fr] grid-rows-[1fr_100px_1fr] gap-3 h-screen relative"
       onWheel={handleWheel}
       tabIndex={0} // so arrow keys work
     >
       <div
         ref={tileRefs.framework}
-        className="tile col-span-1 row-span-2"
+        className="tile col-span-1 row-span-2 relative z-50"
         style={tileStyle("framework")}
       >
         Framework
@@ -118,29 +120,47 @@ function App() {
 
       <div
         ref={tileRefs.centeredDiv}
-        className="tile col-span-1 row-start-2 col-start-3 row-span-1 !flex flex-col  p-3 rounded"
+        className="tile col-span-1 row-start-2 col-start-3 row-span-1 flex !p-0  rounded relative "
         style={tileStyle("centeredDiv")}
       >
-        {scale >= 3 && (
-          <p className="text-black">
-            At Dropbox, our Brand Guidelines help us infuse everything we make
-            with identity
+        {scale <= 3 && (
+          <div
+            className="text-center"
+            style={{
+              fontSize: scale <= 2 ? "3rem" : scale < 3 ? "1.5rem" : undefined,
+              margin: scale <= 2 ? "auto" : undefined,
+              transform: scale <= 2 ? "translate(0, 0)" : "translate(0, 10px)", // example transform
+            }}
+          >
+            <Icon />
+          </div>
+        )}
+
+        {scale > 4 && (
+          <p className="mb-auto p-2" style={{ fontSize: scale * 1.7 + "px" }}>
+            At Dropbox, our Brand <br /> Guidelines help us <br /> infuse
+            everything we <br /> make with identity
           </p>
         )}
 
-        {scale > 2 && (
-          <div className="mt-auto bg-blue-300">
-            <Icon />
-          </div>
+        {scale > 3 && scale < 4 && (
+          <p className="mb-auto p-2" style={{ fontSize: scale * 1.7 + "px" }}>
+            From icons to illustration,
+            <br />
+            logos to language, this
+            <br />
+            collection is the foundation
+            <br />
+            for how Dropbox looks, feels,
+            <br />
+            and sounds like Dropbox.
+          </p>
         )}
 
-        
-
-        {scale <=  2 && (
-          <div className="text-3xl mb-auto">
-            <Icon />
-          </div>
-        )}
+        <div class="absolute top-0 left-[-150vw] z-0 h-1 w-[300vw] bg-green-500"></div>
+        <div class="absolute -bottom-0 left-[-150vw] z-0 h-1 w-[300vw] bg-red-500"></div>
+        <div class="absolute top-[-150vw] left-0 z-0 h-[300vw] w-1 bg-black"></div>
+        <div class="absolute top-[-150vw] right-0 z-0 h-[300vw] w-1 bg-blue-500"></div>
       </div>
 
       <div
