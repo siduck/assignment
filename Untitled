@@ -1,0 +1,24 @@
+
+import { useState } from "react";
+import "./App.css";
+
+function App() {
+  return (
+    <div className="p-3 grid grid-cols-[1fr_1fr_50px_1fr_1fr] grid-rows-[1fr_50px_1fr]  gap-3 h-screen bg-red">
+      <div className="tile col-span-1 "> Framework</div>
+      <div className="tile col-span-1 "> Voice & Tone</div>
+      <div className="tile  col-span-2"> Logo</div>
+      <div className="tile  col-span-1"> Typography</div>
+
+      <div className="tile  col-span-1"> DROO</div>
+
+      <div className="tile col-span-1 "> Icons</div>
+      <div className="tile col-span-1 "> Colors</div>
+      <div className="tile  col-span-1"> Imagery</div>
+      <div className="tile  col-span-1"> Motion</div>
+
+    </div>
+  );
+}
+
+export default App;

@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+
+body {
+  overflow: hidden;
+}
+.tile {
+  @apply bg-slate-400 p-5 rounded text-white;
+}
+
