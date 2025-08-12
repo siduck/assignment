@@ -156,11 +156,6 @@ function App() {
             and sounds like Dropbox.
           </p>
         )}
-
-        <div class="absolute top-0 left-[-150vw] z-0 h-1 w-[300vw] bg-green-500"></div>
-        <div class="absolute -bottom-0 left-[-150vw] z-0 h-1 w-[300vw] bg-red-500"></div>
-        <div class="absolute top-[-150vw] left-0 z-0 h-[300vw] w-1 bg-black"></div>
-        <div class="absolute top-[-150vw] right-0 z-0 h-[300vw] w-1 bg-blue-500"></div>
       </div>
 
       <div
