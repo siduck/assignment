@@ -1,36 +1,45 @@
-@import "tailwindcss";
-
 body {
   overflow: hidden;
+  font-family: "Inter", sans-serif;
+}
+
+.box {
+  display: grid;
+  grid-template-columns: 1fr 1fr 100px 1fr 1fr;
+  grid-template-rows: 1fr 100px 1fr;
+  grid-template-areas:
+    "framework voice voice logo typography"
+    "framework colors center logo motion"
+    "icons colors imagery imagery motion";
+}
+
+@media (max-width: 1008px) {
+  .box {
+    grid-template-columns: 1fr 100px 1fr;
+    grid-template-rows: 1fr 1fr 100px 1fr 1fr;
+    grid-template-areas:
+      "framework voice voice"
+      "logo logo typography"
+      "icons center typography"
+      "icons colors colors"
+      "imagery imagery motion";
+  }
+}
+.tile {
+  @apply relative z-10 h-full  p-5;
+  @apply flex flex-col text-4xl font-semibold tracking-tight;
+  @apply transition duration-300 ease-in-out
+  @apply hover:(bg-black text-white);
 }
 
 .lines {
-  @apply relative;
-  @apply before:absolute before:inset-[0_-300vw] before:border-y before:border-gray-500;
-  @apply after:absolute after:inset-[-300vw_0] after:border-x after:border-gray-500;
+  @apply relative animate-(fade-in duration-600);
 }
 
-.tile {
-  @apply bg-gray-400 p-5 rounded text-white  relative h-full w-full z-100;
-  @apply flex items-center justify-center text-3xl;
+.lines:before {
+  @apply absolute content-[""] inset-[0_-300vw] border-(y slate2);
 }
 
-.tile:before,
-.tile:after {
-  content: "";
-  position: absolute;
-  z-index: -999;
-  border: 4px solid black;
-}
-
-.tile:before {
-  inset: 0 -200vw 0 -220vw;
-  border-right: none;
-  border-left: none;
-}
-
-.tile:after {
-  inset: -200vw 0 -220vw 0;
-  border-top: none;
-  border-bottom: none;
+.lines:after {
+  @apply absolute content-[""] inset-[-300vw_0] border-(x slate2);
 }

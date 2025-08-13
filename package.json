@@ -13,12 +13,12 @@
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
-    "@tailwindcss/vite": "^4.1.11",
+    "@iconify/json": "^2.2.371",
     "@types/react": "^19.1.9",
     "@types/react-dom": "^19.1.7",
     "@vitejs/plugin-react": "^4.7.0",
     "globals": "^16.3.0",
-    "tailwindcss": "^4.1.11",
+    "unocss": "^66.4.2",
     "vite": "^7.1.0"
   }
 }
