@@ -139,23 +139,9 @@ function App() {
         className="tile !p-0 [grid-area:center] bg-[#0061FF] text-white"
         style={tileStyle("center")}
       >
-        {scale <= 3 && (
-          <div
-            className="text-center"
-            style={{
-              fontSize: scale <= 2 ? "3rem" : scale < 3 ? "1.5rem" : undefined,
-              margin: scale <= 2 ? "auto" : undefined,
-              transform: scale <= 2 ? "" : "translate(0, 70px)",
-              transition: "transform 0.20s ease-out",
-            }}
-          >
-            <div className="i-mdi:dropbox" />
-          </div>
-        )}
-
         {scale > 4 && (
           <p
-            className="mb-auto p-2 leading-normal !tracking-normal"
+            className="p-2 leading-normal !tracking-normal"
             style={{ fontSize: ".4rem" }}
           >
             At Dropbox, our Brand <br /> Guidelines help us <br /> infuse
@@ -165,7 +151,7 @@ function App() {
 
         {scale > 3 && scale < 4 && (
           <p
-            className="mb-auto p-2 leading-normal  !tracking-normal"
+            className="p-2 leading-normal  !tracking-normal"
             style={{ fontSize: ".4rem" }}
           >
             From icons to illustration, logos to language, this collection is
@@ -173,6 +159,12 @@ function App() {
             Dropbox.
           </p>
         )}
+
+        <div
+          className={`${scale <= 2 ? "m-auto text-[3rem]" : "mt-auto text-sm"}`}
+        >
+          <div className="i-mdi:dropbox" />
+        </div>
       </div>
 
       <div
