@@ -85,42 +85,52 @@ function App() {
   return (
     <div
       ref={containerRef}
-      className="p-3 grid grid-cols-[1fr_1fr_100px_1fr_1fr] grid-rows-[1fr_100px_1fr] gap-3 h-screen relative"
+      className="box h-screen gap-2 p-2"
       onWheel={handleWheel}
-      tabIndex={0} // so arrow keys work
     >
       <div
+        className="lines [grid-area:framework]"
+        style={tileStyle("framework")}
+      ></div>
+
+      <div className="lines [grid-area:icons]" style={tileStyle("icons")} />
+      <div className="lines [grid-area:voice]" style={tileStyle("voice")} />
+      <div className="lines [grid-area:colors]" style={tileStyle("colors")} />
+      <div className="lines [grid-area:center]" style={tileStyle("center")} />
+      <div className="lines [grid-area:logo]" style={tileStyle("logo")} />
+      <div
+        className="lines [grid-area:typography]"
+        style={tileStyle("typography")}
+      />
+
+      <div className="lines [grid-area:motion]" style={tileStyle("motion")} />
+
+      <div
         ref={tileRefs.framework}
-        className="tile col-span-1 row-span-2 relative z-50"
+        className="tile [grid-area:framework]"
         style={tileStyle("framework")}
       >
         Framework
       </div>
       <div
         ref={tileRefs.voice}
-        className="tile col-span-2 row-span-1"
+        className="tile [grid-area:voice]"
         style={tileStyle("voice")}
       >
         Voice & Tone
       </div>
+
       <div
         ref={tileRefs.logo}
-        className="tile col-span-1 row-span-2"
+        className="tile [grid-area:logo]"
         style={tileStyle("logo")}
       >
         Logo
       </div>
-      <div
-        ref={tileRefs.typography}
-        className="tile col-span-1 row-span-1"
-        style={tileStyle("typography")}
-      >
-        Typography
-      </div>
 
       <div
         ref={tileRefs.centeredDiv}
-        className="tile col-span-1 row-start-2 col-start-3 row-span-1 flex !p-0  rounded relative "
+        className="tile !p-0 [grid-area:center]"
         style={tileStyle("centeredDiv")}
       >
         {scale <= 3 && (
@@ -129,7 +139,7 @@ function App() {
             style={{
               fontSize: scale <= 2 ? "3rem" : scale < 3 ? "1.5rem" : undefined,
               margin: scale <= 2 ? "auto" : undefined,
-              transform: scale <= 2 ? "translate(0, 0)" : "translate(0, 10px)", // example transform
+              transform: scale <= 2 ? "translate(0, 0)" : "translate(0, 10px)",
             }}
           >
             <Icon />
@@ -160,28 +170,39 @@ function App() {
 
       <div
         ref={tileRefs.icons}
-        className="tile col-span-1 row-span-1 row-start-3"
+        className="tile [grid-area:icons]"
         style={tileStyle("icons")}
       >
         Icons
       </div>
+
       <div
         ref={tileRefs.colors}
-        className="tile col-span-1 row-span-2"
+        className="tile [grid-area:colors]"
         style={tileStyle("colors")}
       >
         Colors
       </div>
+
+      <div
+        className="tile  [grid-area:typography]"
+        ref={tileRefs.typography}
+        style={tileStyle("typography")}
+      >
+        Typography
+      </div>
+
       <div
         ref={tileRefs.imagery}
-        className="tile col-span-2 row-span-1"
+        className="tile [grid-area:imagery]"
         style={tileStyle("imagery")}
       >
         Imagery
       </div>
+
       <div
+        className="tile [grid-area:motion]"
         ref={tileRefs.motion}
-        className="tile col-span-1 row-span-2 row-start-2"
         style={tileStyle("motion")}
       >
         Motion
