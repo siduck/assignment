@@ -1,7 +1,8 @@
 import { useState, useRef, useLayoutEffect, useEffect } from "react";
 
 function App() {
-  const [scale, setScale] = useState(1);
+  const maxscale = 5;
+  const [scale, setScale] = useState(maxscale + 0.1);
   const [offsets, setOffsets] = useState({});
   const containerRef = useRef(null);
 
@@ -24,12 +25,14 @@ function App() {
     const centerY = containerRect.top + containerRect.height / 2;
 
     const newOffsets = {};
+
     for (let key in tileRefs) {
       const rect = tileRefs[key].current.getBoundingClientRect();
       const tileCenterX = rect.left + rect.width / 2;
       const tileCenterY = rect.top + rect.height / 2;
       newOffsets[key] = [tileCenterX - centerX, tileCenterY - centerY];
     }
+
     setOffsets(newOffsets);
   };
 
@@ -40,11 +43,13 @@ function App() {
   }, []);
 
   const handleWheel = (event) => {
-    if (scale >= 4 && event.deltaY < 0) return;
+    if (scale >= maxscale && event.deltaY < 0) return;
     setScale((s) => Math.max(1, s + event.deltaY * -0.004));
   };
 
   const handleKeyDown = (event) => {
+    if (scale >= maxscale && event.deltaY < 0) return;
+
     if (event.key === "ArrowUp") {
       setScale((s) => Math.max(1, s + 0.1));
     } else if (event.key === "ArrowDown") {
@@ -57,7 +62,7 @@ function App() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
-  const tileStyle = (key) => {
+  const style = (key) => {
     const [x, y] = offsets[key] || [0, 0];
     return {
       transform: `scale(${scale}) translate(${x * (scale - 1)}px, ${y * (scale - 1)}px)`,
@@ -76,40 +81,28 @@ function App() {
         <>
           <div
             className="lines [grid-area:framework]"
-            style={tileStyle("framework")}
+            style={style("framework")}
           ></div>
 
-          <div className="lines [grid-area:icons]" style={tileStyle("icons")} />
-          <div className="lines [grid-area:voice]" style={tileStyle("voice")} />
-          <div
-            className="lines [grid-area:colors]"
-            style={tileStyle("colors")}
-          />
-          <div
-            className="lines [grid-area:center]"
-            style={tileStyle("center")}
-          />
-          <div className="lines [grid-area:logo]" style={tileStyle("logo")} />
+          <div className="lines [grid-area:icons]" style={style("icons")} />
+          <div className="lines [grid-area:voice]" style={style("voice")} />
+          <div className="lines [grid-area:colors]" style={style("colors")} />
+          <div className="lines [grid-area:center]" style={style("center")} />
+          <div className="lines [grid-area:logo]" style={style("logo")} />
           <div
             className="lines [grid-area:typography]"
-            style={tileStyle("typography")}
+            style={style("typography")}
           />
 
-          <div
-            className="lines [grid-area:imagery]"
-            style={tileStyle("imagery")}
-          />
-          <div
-            className="lines [grid-area:motion]"
-            style={tileStyle("motion")}
-          />
+          <div className="lines [grid-area:imagery]" style={style("imagery")} />
+          <div className="lines [grid-area:motion]" style={style("motion")} />
         </>
       )}
 
       <div
         ref={tileRefs.framework}
         className="tile [grid-area:framework] bg-[#283750] text-[#A2B6CF]"
-        style={tileStyle("framework")}
+        style={style("framework")}
       >
         Framework
       </div>
@@ -118,7 +111,7 @@ function App() {
         ref={tileRefs.voice}
         className="tile [grid-area:voice] bg-[#fad24b] text-[#684505] !pb0 group
                     *:transition-transform duration-300"
-        style={tileStyle("voice")}
+        style={style("voice")}
       >
         Voice & Tone
         <div className="i-fa7-solid:quote-left-alt mt-auto text-7rem group-hover:translate-x-2rem " />
@@ -128,7 +121,7 @@ function App() {
       <div
         ref={tileRefs.logo}
         className="tile [grid-area:logo] bg-[#3dd3ee] text-[#002C3B] group"
-        style={tileStyle("logo")}
+        style={style("logo")}
       >
         Logo
         <div className="i-ph:dropbox-logo-fill group-hover:animate-(bounce-in duration-800)  text-8rem m-(t-auto l-auto)" />
@@ -136,10 +129,11 @@ function App() {
 
       <div
         ref={tileRefs.center}
-        className="tile !p-0 [grid-area:center] bg-[#0061FF] text-white"
-        style={tileStyle("center")}
+        className={`tile !p-0 [grid-area:center]
+              ${scale > 5 ? "bg-white text-[#0061FF] border" : "text-white bg-[#0061FF]"}`}
+        style={style("center")}
       >
-        {scale > 4 && (
+        {scale > maxscale && (
           <p
             className="p-2 leading-normal !tracking-normal"
             style={{ fontSize: ".4rem" }}
@@ -149,7 +143,7 @@ function App() {
           </p>
         )}
 
-        {scale > 3 && scale < 4 && (
+        {scale > 3 && scale < maxscale && (
           <p
             className="p-2 leading-normal  !tracking-normal"
             style={{ fontSize: ".4rem" }}
@@ -161,7 +155,7 @@ function App() {
         )}
 
         <div
-          className={`${scale <= 2 ? "m-auto text-[3rem]" : "mt-auto text-sm"}`}
+          className={`${scale <= 2 ? "m-auto text-[3rem]" : "m1 mt-auto text-sm"}`}
         >
           <div className="i-mdi:dropbox" />
         </div>
@@ -170,7 +164,7 @@ function App() {
       <div
         ref={tileRefs.icons}
         className="tile [grid-area:icons] bg-[#b4dc19] text-[#00512B]"
-        style={tileStyle("icons")}
+        style={style("icons")}
       >
         Icons
         <div className="i-si:lock-line mt-auto text-10rem -m-(x2rem y1rem)" />
@@ -180,7 +174,7 @@ function App() {
         ref={tileRefs.colors}
         className="tile group [grid-area:colors] bg-[#ff8c19] text-[#5B2C00]
                       "
-        style={tileStyle("colors")}
+        style={style("colors")}
       >
         Colors
         <div className="mt-auto ml-auto w-14rem relative">
@@ -202,7 +196,7 @@ function App() {
       <div
         className="tile [grid-area:typography] bg-[#fa551e] text-[#5A1E00] group"
         ref={tileRefs.typography}
-        style={tileStyle("typography")}
+        style={style("typography")}
       >
         Typography
         <span
@@ -216,7 +210,7 @@ function App() {
       <div
         ref={tileRefs.imagery}
         className="tile [grid-area:imagery] bg-[#892055] text-[#F4D0E3]"
-        style={tileStyle("imagery")}
+        style={style("imagery")}
       >
         Imagery
         <div className="i-line-md:image-filled text-10rem m-(t-auto l-auto)" />
@@ -225,7 +219,7 @@ function App() {
       <div
         className="tile [grid-area:motion] bg-[#c8aff0] text-[#3E2B61]"
         ref={tileRefs.motion}
-        style={tileStyle("motion")}
+        style={style("motion")}
       >
         Motion
       </div>
